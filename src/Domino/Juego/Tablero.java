@@ -2,15 +2,18 @@ package Domino.Juego;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Tablero {
     private final int filas = 10;
     private final int columnas = 10;
     private Ficha[][] tablero;
     private List<Ficha> fichas;
+    private List<Jugador> jugadores;
 
     public Tablero() {
         this.fichas = crearFichas();
+        this.jugadores = new ArrayList<>();
         tablero = new Ficha[filas][columnas];
     }
 
@@ -23,6 +26,20 @@ public class Tablero {
             }
         }
         return fichas;
+    }
+
+    public void crearJugadores(int numeroJugadores) {
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < numeroJugadores; i++) {
+            System.out.print("Nombre del jugador " + i + ": ");
+            String nombre = scanner.nextLine();
+            jugadores.add(new Jugador(nombre));
+        }
+    }
+
+    public List<Jugador> getJugadores() {
+        return jugadores;
     }
 
     public void imprimirTablero(){
