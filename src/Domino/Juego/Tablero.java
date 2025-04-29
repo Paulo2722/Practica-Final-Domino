@@ -2,6 +2,7 @@ package Domino.Juego;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Tablero {
@@ -31,7 +32,7 @@ public class Tablero {
     public void crearJugadores(int numeroJugadores) {
         Scanner scanner = new Scanner(System.in);
 
-        for (int i = 0; i < numeroJugadores; i++) {
+        for (int i = 1; i <= numeroJugadores; i++) {
             System.out.print("Nombre del jugador " + i + ": ");
             String nombre = scanner.nextLine();
             jugadores.add(new Jugador(nombre));
@@ -40,6 +41,20 @@ public class Tablero {
 
     public List<Jugador> getJugadores() {
         return jugadores;
+    }
+
+    public void repartirFichas(int numeroJugadores){
+        int numeroMaximoFichasPorJugador = 7;
+        Random random = new Random();
+
+        for (int i = 0; i < numeroMaximoFichasPorJugador; i++){
+            for (int j = 0; j < numeroJugadores; j++){
+                int numeroAleatorio = random.nextInt(fichas.size());
+                Ficha fichaIndice = fichas.remove(numeroAleatorio);
+                jugadores.get(j).recibirFicha(fichaIndice);
+            }
+        }
+        List<Ficha> fichasSinRepartir = fichas;
     }
 
     public void imprimirTablero(){
