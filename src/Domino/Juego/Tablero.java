@@ -65,4 +65,22 @@ public class Tablero {
             System.out.println();
         }
     }
+
+    public int modoDeJuego() {
+        Scanner sc = new Scanner(System.in);
+        int respuesta;
+
+        while (true) {
+            System.out.println("Elige el modo de juego:");
+            System.out.println("Pulsa 1 si quieres el modo individual, pulsa 2 si quieres el modo en parejas");
+            try {
+                respuesta = sc.nextInt();
+                if (respuesta == 1 || respuesta == 2) {
+                    return respuesta;
+                }
+            } catch (Exception e) {
+                System.out.print("El valor introducido no es valido, introduce un nuevo valor");
+            }
+        }
+    }
 }
