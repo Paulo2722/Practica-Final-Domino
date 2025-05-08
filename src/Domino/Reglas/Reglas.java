@@ -1,18 +1,18 @@
 package Domino.Reglas;
 
-import Domino.Juego.Ficha;
 import Domino.Juego.Jugador;
 
 import java.util.List;
 
 public abstract class Reglas {
 
-    public abstract boolean victoria(Jugador jugador);
+    public abstract boolean rondaGanada(Jugador jugador);
 
-    public abstract int puntuacionVictoria();
+    public abstract int puntuacionFinalPartida();
 
-    public abstract int puntuacionJugador(Jugador jugador, Ficha ficha);
+    public abstract int puntuacionJugador(List<Jugador> jugadores);
 
-    public abstract int jugadorQueEmpiezaLaRonda(Jugador jugador);
+    public abstract int jugadorQueEmpiezaLaRonda(List<Jugador> jugador);
 
+    public abstract boolean tieneTraca();
 }
