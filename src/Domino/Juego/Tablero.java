@@ -54,7 +54,17 @@ public class Tablero {
                 jugadores.get(j).recibirFicha(fichaIndice);
             }
         }
-        List<Ficha> fichasSinRepartir = fichas;
+    }
+
+    public void robarFichas(Jugador jugador){
+        if (!fichas.isEmpty()){
+            Random random = new Random();
+            Ficha robarFicha = fichas.remove(random.nextInt(fichas.size()));
+            jugador.recibirFicha(robarFicha);
+            System.out.println("Has robado la ficha " + robarFicha);
+        }else{
+            System.out.println("No quedan fichas para robar");
+        }
     }
 
     public void imprimirTablero(){
