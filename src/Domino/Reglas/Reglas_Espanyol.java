@@ -25,6 +25,7 @@ public class Reglas_Espanyol extends Reglas{
     @Override
     public int jugadorQueEmpiezaLaRonda(List<Jugador> jugador) {
         int jugadorQueEmpieza = 0;
+        int fichaMasGrande = 0;
 
         for (int i = 0; i < jugador.size(); i++){
             List<Ficha> mano = jugador.get(i).getMano();
@@ -33,8 +34,12 @@ public class Reglas_Espanyol extends Reglas{
                 Ficha ficha = mano.get(j);
 
                 if (ficha.getLadoA() == ficha.getLadoB()){
-                    System.out.println("Empieza el jugador " + i);
-                    jugadorQueEmpieza = i;
+                    int fichaDoble = ficha.getLadoA();
+
+                    if (fichaDoble > fichaMasGrande){
+                        fichaMasGrande = fichaDoble;
+                        jugadorQueEmpieza = i;
+                    }
                 }
             }
         }
