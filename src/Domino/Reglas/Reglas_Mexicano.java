@@ -4,6 +4,7 @@ import Domino.Juego.Ficha;
 import Domino.Juego.Jugador;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Reglas_Mexicano extends Reglas{
 
@@ -19,8 +20,24 @@ public class Reglas_Mexicano extends Reglas{
     }
 
     @Override
-    public boolean soloSeJuegaEnParejas(){
-        return false;
+    public boolean modoDeJuegoEnParejas(){
+        Scanner sc = new Scanner(System.in);
+        int respuesta;
+
+        while (true) {
+            System.out.println("Elige el modo de juego:");
+            System.out.println("Pulsa 1 si quieres el modo individual, pulsa 2 si quieres el modo en parejas");
+            try {
+                respuesta = sc.nextInt();
+                if (respuesta == 1) {
+                    return false;
+                }else if (respuesta == 2){
+                    return true;
+                }
+            } catch (Exception e) {
+                System.out.print("El valor introducido no es valido, introduce un nuevo valor");
+            }
+        }
     }
 
     @Override
