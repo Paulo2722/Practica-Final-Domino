@@ -16,5 +16,5 @@ public abstract class Reglas {
 
     public abstract boolean tieneTraca();
 
-    public abstract boolean soloSeJuegaEnParejas();
+    public abstract boolean modoDeJuegoEnParejas();
 }
