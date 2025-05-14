@@ -23,6 +23,11 @@ public class Reglas_Espanyol extends Reglas{
     }
 
     @Override
+    public boolean soloSeJuegaEnParejas(){
+        return false;
+    };
+
+    @Override
     public int jugadorQueEmpiezaLaRonda(List<Jugador> jugador) {
         int jugadorQueEmpieza = 0;
         int fichaMasGrande = 0;

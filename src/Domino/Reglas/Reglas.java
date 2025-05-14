@@ -15,4 +15,6 @@ public abstract class Reglas {
     public abstract int jugadorQueEmpiezaLaRonda(List<Jugador> jugador);
 
     public abstract boolean tieneTraca();
+
+    public abstract boolean soloSeJuegaEnParejas();
 }
