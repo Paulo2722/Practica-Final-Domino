@@ -11,10 +11,12 @@ public class Tablero {
     private Ficha[][] tablero;
     private List<Ficha> fichas;
     private List<Jugador> jugadores;
+    private List<Parejas> parejas;
 
     public Tablero() {
         this.fichas = crearFichas();
         this.jugadores = new ArrayList<>();
+        this.parejas = new ArrayList<>();
         tablero = new Ficha[filas][columnas];
     }
 
@@ -36,6 +38,25 @@ public class Tablero {
             System.out.print("Nombre del jugador " + i + ": ");
             String nombre = scanner.nextLine();
             jugadores.add(new Jugador(nombre));
+        }
+    }
+
+    public void crearParejas(){
+        for (int i = 0; i < jugadores.size(); i += 2){
+            Parejas pareja = new Parejas("Pareja " + ((i / 2) + 1));
+
+            pareja.agregarJugador(jugadores.get(i));
+            if (i + 1 < jugadores.size()) {
+                pareja.agregarJugador(jugadores.get(i + 1));
+            }
+            parejas.add(pareja);
+
+            System.out.print(pareja.getNombre() + ": ");
+            List<Jugador> integrantes = pareja.getJugadoresPareja();
+            for (int j = 0; j < integrantes.size(); j++) {
+                System.out.print(integrantes.get(j).getNombre() + " ");
+            }
+            System.out.println();
         }
     }
 

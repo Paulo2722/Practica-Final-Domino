@@ -11,10 +11,15 @@ public class Parejas {
 
     public Parejas(String nombre){
         this.jugadoresPareja = new ArrayList<>();
+        this.nombre = nombre;
     }
 
     public Parejas getPareja(){
         return pareja;
+    }
+
+    public List<Jugador> getJugadoresPareja(){
+        return jugadoresPareja;
     }
 
     public String getNombre(){
@@ -35,5 +40,10 @@ public class Parejas {
 
     public void setPuntuacion(int puntuacion){
         this.puntuacionEquipo = puntuacion;
+    }
+
+    public void agregarJugador(Jugador jugador){
+        jugadoresPareja.add(jugador);
+        jugador.setPareja(this);
     }
 }

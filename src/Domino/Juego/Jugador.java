@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Jugador {
     private String nombre;
+    private Parejas pareja;
     private List<Ficha> mano;
     private int puntuacion = 0;
 
@@ -27,6 +28,14 @@ public class Jugador {
 
     public void setNombre(String nombre){
         this.nombre = nombre;
+    }
+
+    public Parejas getPareja(){
+        return pareja;
+    }
+
+    public void setPareja(Parejas pareja){
+        this.pareja = pareja;
     }
 
     public void setPuntuacion(int puntuacion){
