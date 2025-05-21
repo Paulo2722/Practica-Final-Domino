@@ -2,6 +2,7 @@ package Domino.Reglas;
 
 import Domino.Juego.Ficha;
 import Domino.Juego.Jugador;
+import Domino.Juego.Parejas;
 
 import java.util.List;
 import java.util.Scanner;
@@ -45,10 +46,9 @@ public class Reglas_Mexicano extends Reglas{
         return true;
     }
 
+    //Provisional
     public int puntuacionTraca(){
-        if (tieneTraca()){
-
-        }
+        return 1;
     }
 
     @Override
@@ -72,28 +72,62 @@ public class Reglas_Mexicano extends Reglas{
     }
 
     @Override
-    public int puntuacionJugador(List<Jugador> jugadores) {
-        int puntuacion = 0;
-        Jugador jugador = null;
+    public int puntuacionJugador(List<Jugador> jugadores, List<Parejas> parejas) {
+        if (modoDeJuegoEnParejas()) {
 
-        for (int i = 0; i < jugadores.size(); i++){
-            List<Ficha> mano = jugadores.get(i).getMano();
+            for (int i = 0; i < parejas.size(); i++) {
+                Parejas pareja = parejas.get(i);
+                List<Jugador> jugadoresPareja = pareja.getJugadoresPareja();
+                Jugador jugadorGanador = null;
+                int puntuacionPareja = 0;
 
-            if (mano.isEmpty()){
-                jugador = jugadores.get(i);
-            }else{
-                for (int j = 0; j < mano.size(); j++){
-                    Ficha ficha = mano.get(j);
-                    puntuacion += ficha.getLadoA() + ficha.getLadoB();
+                for (int j = 0; j < jugadoresPareja.size(); j++) {
+                    Jugador jugador = jugadoresPareja.get(j);
+                    List<Ficha> mano = jugador.getMano();
+
+                    if (mano.isEmpty()) {
+                        jugadorGanador = jugador;
+
+                    } else {
+
+                        for (int n = 0; n < mano.size(); n++) {
+                            Ficha ficha = mano.get(n);
+                            puntuacionPareja += ficha.getLadoA() + ficha.getLadoB();
+                        }
+                    }
+                }
+                pareja.setPuntuacion(pareja.getPuntuacionEquipo() + puntuacionPareja);
+
+                if (jugadorGanador != null && jugadorGanador.getPuntuacion() >= puntuacionFinalPartida()) {
+                    System.out.println("La pareja " + pareja.getNombre() + " ha ganado la partida");
                 }
             }
+        } else {
+
+            for (int i = 0; i < jugadores.size(); i++) {
+                List<Ficha> mano = jugadores.get(i).getMano();
+                Jugador jugador = jugadores.get(i);
+                Jugador jugadorGanador = null;
+                int puntuacion = 0;
+
+                if (mano.isEmpty()) {
+                    jugadorGanador = jugadores.get(i);
+
+                } else {
+
+                    for (int j = 0; j < mano.size(); j++) {
+                        Ficha ficha = mano.get(j);
+                        puntuacion += ficha.getLadoA() + ficha.getLadoB();
+                    }
+                }
+                jugador.setPuntuacion(jugador.getPuntuacion() + puntuacion);
+
+                if (jugadorGanador != null && puntuacion >= puntuacionFinalPartida()) {
+                    System.out.println("El jugador" + jugador.getNombre() + "ha ganado la partida");
+                }
+                return puntuacion;
+            }
         }
-        if (jugador != null){
-            jugador.setPuntuacion(puntuacion);
-        }
-        if (puntuacion >= puntuacionFinalPartida()){
-            System.out.println("El jugador" + jugador.getNombre() + "ha ganado la partida");
-        }
-        return puntuacion;
+        return 0;
     }
 }
