@@ -1,5 +1,7 @@
 package Domino.Juego;
 
+import Domino.Reglas.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +10,7 @@ import java.util.Scanner;
 public class Tablero {
     private final int filas = 10;
     private final int columnas = 10;
+    Reglas reglas;
     private Ficha[][] tablero;
     private List<Ficha> fichas;
     private List<Jugador> jugadores;
@@ -130,6 +133,52 @@ public class Tablero {
             } catch (Exception e) {
                 System.out.print("El valor introducido no es valido, introduce un nuevo valor");
             }
+        }
+    }
+
+    public void elegirReglas(){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Selecciona con que reglamento quieres jugar (1-7):");
+        System.out.println("1. Reglas Españolas");
+        System.out.println("2. Reglas Mexicanas");
+        System.out.println("3. Reglas Chilenas");
+        System.out.println("4. Reglas Latinas");
+        System.out.println("5. Reglas Colombianas");
+        System.out.println("6. Reglas Ponceñas");
+        System.out.println("7. Reglas Venezolanas");
+
+        int opcion = sc.nextInt();
+
+        switch (opcion){
+            case 1:
+                System.out.println("Has elegido las reglas Españolas");
+                reglas = new Reglas_Espanyol();
+                break;
+            case 2:
+                System.out.println("Has elegido las reglas Mexicanas");
+                reglas = new Reglas_Mexicano();
+                break;
+            case 3:
+                System.out.println("Has elegido las reglas Chilenas");
+                reglas = new Reglas_Chileno();
+                break;
+            case 4:
+                System.out.println("Has elegido las reglas Latinas");
+                reglas = new Reglas_Latin();
+                break;
+            case 5:
+                System.out.println("Has elegido las reglas Colombianas");
+                reglas = new Reglas_Colombiano();
+                break;
+            case 6:
+                System.out.println("Has elegido las reglas Ponceñas");
+                reglas = new Reglas_Ponce();
+                break;
+            case 7:
+                System.out.println("Has elegido las reglas Venezolanas");
+                reglas = new Reglas_Venezolano();
+                break;
         }
     }
 }
