@@ -191,4 +191,40 @@ public class Tablero {
                 break;
         }
     }
+
+    public void colocarFicha(Jugador jugador){
+        Scanner sc = new Scanner(System.in);
+        List<Ficha> mano = jugador.getMano();
+
+        if(mano.isEmpty()){
+            System.out.println("No tienes fichas para jugar");
+            return;
+        }
+
+        jugador.mostrarMano();
+
+        System.out.println(jugador.getNombre() + ", elige la ficha que quieres colocar: (0-" + (mano.size() - 1) + ")");
+        jugador.getMano();
+        int posicionFicha = sc.nextInt();
+
+        if (posicionFicha > mano.size() || posicionFicha < 0){
+            System.out.println("El valor introducido no es valido, introduce otro");
+        }
+        Ficha fichaSeleccionada = mano.get(posicionFicha);
+
+        System.out.println("Elige la posicion en la que poner la ficha");
+
+        System.out.print("Fila: ");
+        int posicionFila = sc.nextInt();
+
+        System.out.print("Columna: ");
+        int posicionColumna = sc.nextInt();
+
+        if (tablero[posicionFila][posicionColumna] != null){
+            System.out.println("La posicion ya esta ocupada, elige otra");
+        }else{
+            tablero[posicionFila][posicionColumna] = fichaSeleccionada;
+            jugador.getMano().remove(posicionFicha);
+        }
+    }
 }
