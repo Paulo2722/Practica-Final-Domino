@@ -87,10 +87,21 @@ public class Tablero {
     }
 
     public void robarFichas(Jugador jugador){
-        if (!fichas.isEmpty()){
+        Scanner sc = new Scanner(System.in);
+        String respuesta;
+
+        System.out.println("¿Quieres robar una ficha? (S/N)");
+        respuesta = sc.nextLine().toUpperCase();
+
+        if (respuesta.equals("N")){
+            return;
+        }
+
+        if (!fichas.isEmpty() && respuesta.equals("S")){
             Random random = new Random();
             Ficha robarFicha = fichas.remove(random.nextInt(fichas.size()));
             jugador.recibirFicha(robarFicha);
+
             System.out.println("Has robado la ficha " + robarFicha);
         }else{
             System.out.println("No quedan fichas para robar");
@@ -212,7 +223,7 @@ public class Tablero {
         }
         Ficha fichaSeleccionada = mano.get(posicionFicha);
 
-        System.out.println("Elige la posicion en la que poner la ficha");
+        System.out.println("Elige la posicion en la que poner la ficha: (0-9)");
 
         System.out.print("Fila: ");
         int posicionFila = sc.nextInt();
