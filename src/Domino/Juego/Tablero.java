@@ -21,6 +21,12 @@ public class Tablero {
         this.jugadores = new ArrayList<>();
         this.parejas = new ArrayList<>();
         tablero = new Ficha[filas][columnas];
+
+        for (int i = 0; i < filas; i++){
+            for (int j = 0; j < columnas; j++){
+                tablero[i][j] = null;
+            }
+        }
     }
 
     public List<Ficha> crearFichas(){
@@ -91,10 +97,14 @@ public class Tablero {
         }
     }
 
-    public void imprimirTablero(){
-        for (int i = 0; i < filas; i++){
-            for(int j = 0; j < columnas; j++){
-                System.out.println(tablero[i][j].toString());
+    public void imprimirTablero() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (tablero[i][j] != null) {
+                    System.out.print(tablero[i][j].toString());
+                }else{
+                    System.out.print("[ ]");
+                }
             }
             System.out.println();
         }
