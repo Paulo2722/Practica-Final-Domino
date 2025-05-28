@@ -139,24 +139,6 @@ public class Tablero {
         }
     }
 
-    public int horientacionFicha(){
-        Scanner sc = new Scanner(System.in);
-        int respuesta;
-
-        while (true) {
-            System.out.println("Elige la colocacion de la pieza:");
-            System.out.println("Pulsa 1 si quieres colocarla de forma vertical, pulsa 2 para colocarla de forma horizontal");
-            try {
-                respuesta = sc.nextInt();
-                if (respuesta == 1 || respuesta == 2) {
-                    return respuesta;
-                }
-            } catch (Exception e) {
-                System.out.print("El valor introducido no es valido, introduce un nuevo valor");
-            }
-        }
-    }
-
     public void elegirReglas(){
         Scanner sc = new Scanner(System.in);
 
