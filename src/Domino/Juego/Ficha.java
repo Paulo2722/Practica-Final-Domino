@@ -29,4 +29,10 @@ public class Ficha {
     public String toString(){
         return "[" + ladoA + "|" + ladoB + "]";
     }
+
+    public void girarFicha(){
+        int temp = ladoA;
+        ladoA = ladoB;
+        ladoB = temp;
+    }
 }
