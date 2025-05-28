@@ -204,6 +204,15 @@ public class Tablero {
             System.out.println("El valor introducido no es valido, introduce otro");
         }
         Ficha fichaSeleccionada = mano.get(posicionFicha);
+        sc.nextLine();
+
+        System.out.println("Quieres girar la ficha: (S/N)");
+        String girar = sc.nextLine().toUpperCase();
+
+        if (girar.equals("S")){
+            fichaSeleccionada.girarFicha();
+            System.out.println("Ficha girada, ahora es " + fichaSeleccionada);
+        }
 
         System.out.println("Elige la posicion en la que poner la ficha: (0-9)");
 
