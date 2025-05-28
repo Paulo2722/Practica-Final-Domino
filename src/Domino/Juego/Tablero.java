@@ -22,19 +22,19 @@ public class Tablero {
         this.parejas = new ArrayList<>();
         tablero = new Ficha[filas][columnas];
 
-        for (int i = 0; i < filas; i++){
-            for (int j = 0; j < columnas; j++){
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
                 tablero[i][j] = null;
             }
         }
     }
 
-    public List<Ficha> crearFichas(){
+    public List<Ficha> crearFichas() {
         List<Ficha> fichas = new ArrayList<>();
 
-        for (int i = 0; i <= 6; i++){
-            for (int j = i; j <= 6; j++){
-                fichas.add(new Ficha(i,j));
+        for (int i = 0; i <= 6; i++) {
+            for (int j = i; j <= 6; j++) {
+                fichas.add(new Ficha(i, j));
             }
         }
         return fichas;
@@ -50,8 +50,8 @@ public class Tablero {
         }
     }
 
-    public void crearParejas(){
-        for (int i = 0; i < jugadores.size(); i += 2){
+    public void crearParejas() {
+        for (int i = 0; i < jugadores.size(); i += 2) {
             Parejas pareja = new Parejas("Pareja " + ((i / 2) + 1));
 
             pareja.agregarJugador(jugadores.get(i));
@@ -73,12 +73,12 @@ public class Tablero {
         return jugadores;
     }
 
-    public void repartirFichas(int numeroJugadores){
+    public void repartirFichas(int numeroJugadores) {
         int numeroMaximoFichasPorJugador = 7;
         Random random = new Random();
 
-        for (int i = 0; i < numeroMaximoFichasPorJugador; i++){
-            for (int j = 0; j < numeroJugadores; j++){
+        for (int i = 0; i < numeroMaximoFichasPorJugador; i++) {
+            for (int j = 0; j < numeroJugadores; j++) {
                 int numeroAleatorio = random.nextInt(fichas.size());
                 Ficha fichaIndice = fichas.remove(numeroAleatorio);
                 jugadores.get(j).recibirFicha(fichaIndice);
@@ -86,24 +86,24 @@ public class Tablero {
         }
     }
 
-    public void robarFichas(Jugador jugador){
+    public void robarFichas(Jugador jugador) {
         Scanner sc = new Scanner(System.in);
         String respuesta;
 
         System.out.println("¿Quieres robar una ficha? (S/N)");
         respuesta = sc.nextLine().toUpperCase();
 
-        if (respuesta.equals("N")){
+        if (respuesta.equals("N")) {
             return;
         }
 
-        if (!fichas.isEmpty() && respuesta.equals("S")){
+        if (!fichas.isEmpty() && respuesta.equals("S")) {
             Random random = new Random();
             Ficha robarFicha = fichas.remove(random.nextInt(fichas.size()));
             jugador.recibirFicha(robarFicha);
 
             System.out.println("Has robado la ficha " + robarFicha);
-        }else{
+        } else {
             System.out.println("No quedan fichas para robar");
         }
     }
@@ -113,7 +113,7 @@ public class Tablero {
             for (int j = 0; j < columnas; j++) {
                 if (tablero[i][j] != null) {
                     System.out.print(tablero[i][j].toString());
-                }else{
+                } else {
                     System.out.print("[ ]");
                 }
             }
@@ -139,7 +139,7 @@ public class Tablero {
         }
     }
 
-    public void elegirReglas(){
+    public void elegirReglas() {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Selecciona con que reglamento quieres jugar (1-7):");
@@ -153,7 +153,7 @@ public class Tablero {
 
         int opcion = sc.nextInt();
 
-        switch (opcion){
+        switch (opcion) {
             case 1:
                 System.out.println("Has elegido las reglas Españolas");
                 reglas = new Reglas_Espanyol();
@@ -185,11 +185,11 @@ public class Tablero {
         }
     }
 
-    public void colocarFicha(Jugador jugador){
+    public void colocarFicha(Jugador jugador) {
         Scanner sc = new Scanner(System.in);
         List<Ficha> mano = jugador.getMano();
 
-        if(mano.isEmpty()){
+        if (mano.isEmpty()) {
             System.out.println("No tienes fichas para jugar");
             return;
         }
@@ -200,7 +200,7 @@ public class Tablero {
         jugador.getMano();
         int posicionFicha = sc.nextInt();
 
-        if (posicionFicha > mano.size() || posicionFicha < 0){
+        if (posicionFicha > mano.size() || posicionFicha < 0) {
             System.out.println("El valor introducido no es valido, introduce otro");
         }
         Ficha fichaSeleccionada = mano.get(posicionFicha);
@@ -209,7 +209,7 @@ public class Tablero {
         System.out.println("Quieres girar la ficha: (S/N)");
         String girar = sc.nextLine().toUpperCase();
 
-        if (girar.equals("S")){
+        if (girar.equals("S")) {
             fichaSeleccionada.girarFicha();
             System.out.println("Ficha girada, ahora es " + fichaSeleccionada);
         }
@@ -222,11 +222,35 @@ public class Tablero {
         System.out.print("Columna: ");
         int posicionColumna = sc.nextInt();
 
-        if (tablero[posicionFila][posicionColumna] != null){
+
+        if (tablero[posicionFila][posicionColumna] != null) {
             System.out.println("La posicion ya esta ocupada, elige otra");
-        }else{
-            tablero[posicionFila][posicionColumna] = fichaSeleccionada;
-            jugador.getMano().remove(posicionFicha);
+        } else {
+            boolean sePuedeColocar = true;
+
+            if (posicionColumna < (columnas - 1) && tablero[posicionFila][posicionColumna + 1] != null) {
+                Ficha fichaDerecha = tablero[posicionFila][posicionColumna + 1];
+
+                if (fichaDerecha.getLadoA() != fichaSeleccionada.getLadoB()) {
+                    sePuedeColocar = false;
+                    System.out.println("Los valores no coinciden, vuelve a intentarlo");
+                }
+            }
+
+            if (posicionColumna > 0 && tablero[posicionFila][posicionColumna - 1] != null) {
+                Ficha fichaIzquierda = tablero[posicionFila][posicionColumna - 1];
+
+                if (fichaIzquierda.getLadoB() != fichaSeleccionada.getLadoA()) {
+                    sePuedeColocar = false;
+                    System.out.println("Los valores no coinciden, vuelve a intentarlo");
+                } else {
+                    sePuedeColocar = true;
+                }
+            }
+            if (sePuedeColocar) {
+                tablero[posicionFila][posicionColumna] = fichaSeleccionada;
+                jugador.getMano().remove(posicionFicha);
+            }
         }
     }
 }
