@@ -8,8 +8,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Tablero {
-    private final int filas = 10;
-    private final int columnas = 10;
+    private final int filas = 1;
+    private final int columnas = 30;
+    private boolean primeraFichaColocada = false;
     Reglas reglas;
     private Ficha[][] tablero;
     private List<Ficha> fichas;
@@ -197,7 +198,6 @@ public class Tablero {
         jugador.mostrarMano();
 
         System.out.println(jugador.getNombre() + ", elige la ficha que quieres colocar: (0-" + (mano.size() - 1) + ")");
-        jugador.getMano();
         int posicionFicha = sc.nextInt();
 
         if (posicionFicha > mano.size() || posicionFicha < 0) {
@@ -214,43 +214,50 @@ public class Tablero {
             System.out.println("Ficha girada, ahora es " + fichaSeleccionada);
         }
 
-        System.out.println("Elige la posicion en la que poner la ficha: (0-9)");
-
-        System.out.print("Fila: ");
-        int posicionFila = sc.nextInt();
+        System.out.println("Elige la columna en la que poner la ficha: (0-29)");
 
         System.out.print("Columna: ");
         int posicionColumna = sc.nextInt();
 
-
-        if (tablero[posicionFila][posicionColumna] != null) {
+        if (tablero[0][posicionColumna] != null) {
             System.out.println("La posicion ya esta ocupada, elige otra");
-        } else {
-            boolean sePuedeColocar = true;
+        }
 
-            if (posicionColumna < (columnas - 1) && tablero[posicionFila][posicionColumna + 1] != null) {
-                Ficha fichaDerecha = tablero[posicionFila][posicionColumna + 1];
+        if (!primeraFichaColocada) {
+            tablero[0][posicionColumna] = fichaSeleccionada;
+            jugador.getMano().remove(posicionFicha);
+            primeraFichaColocada = true;
+            return;
+        }
 
-                if (fichaDerecha.getLadoA() != fichaSeleccionada.getLadoB()) {
-                    sePuedeColocar = false;
-                    System.out.println("Los valores no coinciden, vuelve a intentarlo");
-                }
+        boolean hayFichasAlrededor = false;
+        boolean losLadosSonIguales = false;
+
+        if (posicionColumna < (columnas - 1) && tablero[0][posicionColumna + 1] != null) {
+            Ficha fichaDerecha = tablero[0][posicionColumna + 1];
+            hayFichasAlrededor = true;
+
+            if (fichaDerecha.getLadoA() == fichaSeleccionada.getLadoB()) {
+                losLadosSonIguales = true;
             }
+        }
 
-            if (posicionColumna > 0 && tablero[posicionFila][posicionColumna - 1] != null) {
-                Ficha fichaIzquierda = tablero[posicionFila][posicionColumna - 1];
+        if (posicionColumna > 0 && tablero[0][posicionColumna - 1] != null) {
+            Ficha fichaIzquierda = tablero[0][posicionColumna - 1];
+            hayFichasAlrededor = true;
 
-                if (fichaIzquierda.getLadoB() != fichaSeleccionada.getLadoA()) {
-                    sePuedeColocar = false;
-                    System.out.println("Los valores no coinciden, vuelve a intentarlo");
-                } else {
-                    sePuedeColocar = true;
-                }
+            if (fichaIzquierda.getLadoB() == fichaSeleccionada.getLadoA()) {
+                losLadosSonIguales = true;
             }
-            if (sePuedeColocar) {
-                tablero[posicionFila][posicionColumna] = fichaSeleccionada;
-                jugador.getMano().remove(posicionFicha);
-            }
+        }
+
+        if (!hayFichasAlrededor){
+            System.out.println("La ficha ha de colocarse al lado de otra");
+        }else if (!losLadosSonIguales){
+            System.out.println("Los lados de la ficha no coinciden");
+        }else {
+            tablero[0][posicionColumna] = fichaSeleccionada;
+            jugador.getMano().remove(posicionFicha);
         }
     }
 }
