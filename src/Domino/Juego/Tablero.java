@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Tablero {
     private final int filas = 1;
     private final int columnas = 30;
+    private boolean modoDeJuegoEsEnParejas = false;
     private boolean primeraFichaColocada = false;
     Reglas reglas;
     private Ficha[][] tablero;
@@ -122,22 +123,8 @@ public class Tablero {
         }
     }
 
-    public int modoDeJuego() {
-        Scanner sc = new Scanner(System.in);
-        int respuesta;
-
-        while (true) {
-            System.out.println("Elige el modo de juego:");
-            System.out.println("Pulsa 1 si quieres el modo individual, pulsa 2 si quieres el modo en parejas");
-            try {
-                respuesta = sc.nextInt();
-                if (respuesta == 1 || respuesta == 2) {
-                    return respuesta;
-                }
-            } catch (Exception e) {
-                System.out.print("El valor introducido no es valido, introduce un nuevo valor");
-            }
-        }
+    public void configurarModoDeJuego(Reglas reglas) {
+        this.modoDeJuegoEsEnParejas = reglas.modoDeJuegoEnParejas();
     }
 
     public void elegirReglas() {
@@ -251,11 +238,11 @@ public class Tablero {
             }
         }
 
-        if (!hayFichasAlrededor){
+        if (!hayFichasAlrededor) {
             System.out.println("La ficha ha de colocarse al lado de otra");
-        }else if (!losLadosSonIguales){
+        } else if (!losLadosSonIguales) {
             System.out.println("Los lados de la ficha no coinciden");
-        }else {
+        } else {
             tablero[0][posicionColumna] = fichaSeleccionada;
             jugador.getMano().remove(posicionFicha);
         }
@@ -301,5 +288,39 @@ public class Tablero {
         }
         reglas.setTranca(false);
         return false;
+    }
+
+    public void sumarPuntosEnCasoDeTranca() {
+        if (!hayTranca()){
+            return;
+        }
+
+        Jugador ganador = null;
+        int menorPuntuacion = 9999;
+
+        for (int i = 0; i < jugadores.size(); i++){
+            Jugador jugador = jugadores.get(i);
+            int suma = 0;
+
+            for (int j = 0; j < jugador.getMano().size(); j++){
+                Ficha ficha = jugador.getMano().get(j);
+                suma += ficha.getLadoA() + ficha.getLadoB();
+            }
+
+            if (suma < menorPuntuacion){
+                menorPuntuacion = suma;
+                ganador = jugador;
+            }
+        }
+
+        if (ganador != null){
+            if (modoDeJuegoEsEnParejas && ganador.getPareja() != null){
+                ganador.getPareja().setPuntuacion(ganador.getPuntuacion() + menorPuntuacion);
+                System.out.println("El jugador " + ganador.getNombre() + " gana la tranca y suma " + menorPuntuacion + " puntos");
+            }else{
+                ganador.setPuntuacion(ganador.getPuntuacion() + menorPuntuacion);
+                System.out.println("El jugador " + ganador.getNombre() + " gana la tranca y suma " + menorPuntuacion + " puntos");
+            }
+        }
     }
 }

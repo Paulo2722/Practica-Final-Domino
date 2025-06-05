@@ -17,8 +17,6 @@ public abstract class Reglas {
 
     public abstract int jugadorQueEmpiezaLaRonda(List<Jugador> jugador);
 
-    public abstract int sumarPuntuacionEnCasoDeTranca(List<Jugador> jugadores, List<Parejas> parejas);
-
     public abstract boolean modoDeJuegoEnParejas();
 
     public boolean hayTranca() {
