@@ -260,4 +260,46 @@ public class Tablero {
             jugador.getMano().remove(posicionFicha);
         }
     }
+
+    public boolean hayTranca() {
+        int ladoIzquierda = -1;
+        int ladoDerecha = -1;
+
+        for (int i = 0; i < columnas; i++) {
+            if (tablero[0][i] != null) {
+                ladoIzquierda = tablero[0][i].getLadoA();
+                break;
+            }
+        }
+
+        for (int i = columnas - 1; i >= 0; i--) {
+            if (tablero[0][i] != null) {
+                ladoDerecha = tablero[0][i].getLadoB();
+                break;
+            }
+        }
+
+        if (ladoIzquierda == -1 || ladoDerecha == -1) {
+            return false;
+        }
+
+        for (int i = 0; i < jugadores.size(); i++) {
+            List<Ficha> mano = jugadores.get(i).getMano();
+
+            for (int j = 0; j < mano.size(); j++) {
+                Ficha ficha = mano.get(j);
+
+                if (ficha.getLadoA() == ladoIzquierda || ficha.getLadoB() == ladoIzquierda || ficha.getLadoA() == ladoDerecha || ficha.getLadoB() == ladoDerecha) {
+                    return false;
+                }
+            }
+        }
+        if (fichas.isEmpty()) {
+            System.out.println("Ha habido una tranca, nadie puede continuar");
+            reglas.setTranca(true);
+            return true;
+        }
+        reglas.setTranca(false);
+        return false;
+    }
 }

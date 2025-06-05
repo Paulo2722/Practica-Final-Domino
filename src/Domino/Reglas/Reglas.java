@@ -2,11 +2,12 @@ package Domino.Reglas;
 
 import Domino.Juego.Jugador;
 import Domino.Juego.Parejas;
-import Domino.Juego.Partida;
 
 import java.util.List;
 
 public abstract class Reglas {
+
+    protected boolean haHabidoTranca = false;
 
     public abstract boolean rondaGanada(Jugador jugador);
 
@@ -16,7 +17,15 @@ public abstract class Reglas {
 
     public abstract int jugadorQueEmpiezaLaRonda(List<Jugador> jugador);
 
-    public abstract boolean tieneTraca();
+    public abstract int sumarPuntuacionEnCasoDeTranca(List<Jugador> jugadores, List<Parejas> parejas);
 
     public abstract boolean modoDeJuegoEnParejas();
+
+    public boolean hayTranca() {
+        return haHabidoTranca;
+    }
+
+    public void setTranca(boolean valor) {
+        this.haHabidoTranca = valor;
+    }
 }
