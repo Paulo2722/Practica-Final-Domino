@@ -201,6 +201,15 @@ public class Tablero {
             System.out.println("Ficha girada, ahora es " + fichaSeleccionada);
         }
 
+        if (!primeraFichaColocada) {
+            System.out.println("La primera ficha se coloca en el centro del tablero");
+            int columnaCentral = columnas / 2;
+            tablero[0][columnaCentral] = fichaSeleccionada;
+            jugador.getMano().remove(posicionFicha);
+            primeraFichaColocada = true;
+            return;
+        }
+
         System.out.println("Elige la columna en la que poner la ficha: (0-29)");
 
         System.out.print("Columna: ");
@@ -208,13 +217,6 @@ public class Tablero {
 
         if (tablero[0][posicionColumna] != null) {
             System.out.println("La posicion ya esta ocupada, elige otra");
-        }
-
-        if (!primeraFichaColocada) {
-            tablero[0][posicionColumna] = fichaSeleccionada;
-            jugador.getMano().remove(posicionFicha);
-            primeraFichaColocada = true;
-            return;
         }
 
         boolean hayFichasAlrededor = false;
