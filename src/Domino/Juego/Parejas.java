@@ -39,7 +39,7 @@ public class Parejas {
     }
 
     public void setPuntuacion(int puntuacion){
-        this.puntuacionEquipo = puntuacion;
+        this.puntuacionEquipo += puntuacion;
     }
 
     public void agregarJugador(Jugador jugador){
