@@ -41,7 +41,7 @@ public class Reglas_Colombiano extends Reglas{
                     }
                 }
             }
-            pareja.setPuntuacion(pareja.getPuntuacionEquipo() + puntuacionPareja);
+            pareja.setPuntuacion(puntuacionPareja);
 
             if (jugadorGanador != null && jugadorGanador.getPuntuacion() >= puntuacionFinalPartida()) {
                 System.out.println("La pareja " + pareja.getNombre() + " ha ganado la partida");
@@ -50,7 +50,6 @@ public class Reglas_Colombiano extends Reglas{
         return 0;
     }
 
-    //Falta implementar lo de quien empieza despues de la primera ronda
     @Override
     public int jugadorQueEmpiezaLaRonda(List<Jugador> jugador) {
         int jugadorQueEmpieza = 0;
@@ -70,12 +69,12 @@ public class Reglas_Colombiano extends Reglas{
     }
 
     @Override
-    public boolean tieneTraca() {
-        return true;
+    public boolean hayTranca() {
+        return false;
     }
 
     @Override
     public boolean modoDeJuegoEnParejas() {
-        return true;
+        return super.modoDeJuegoEnParejas();
     }
 }

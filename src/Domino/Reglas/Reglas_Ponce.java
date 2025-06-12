@@ -42,7 +42,7 @@ public class Reglas_Ponce extends Reglas{
 
     @Override
     public boolean modoDeJuegoEnParejas() {
-        return true;
+        return super.modoDeJuegoEnParejas();
     }
 
     public void sumarPuntuacionPorPase(Jugador jugador){

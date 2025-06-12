@@ -41,7 +41,7 @@ public class Reglas_Venezolano extends Reglas{
                     }
                 }
             }
-            pareja.setPuntuacion(pareja.getPuntuacionEquipo() + puntuacionPareja);
+            pareja.setPuntuacion(puntuacionPareja);
 
             if (jugadorGanador != null && jugadorGanador.getPuntuacion() >= puntuacionFinalPartida()) {
                 System.out.println("La pareja " + pareja.getNombre() + " ha ganado la partida");
@@ -69,12 +69,12 @@ public class Reglas_Venezolano extends Reglas{
     }
 
     @Override
-    public boolean tieneTraca() {
+    public boolean hayTranca() {
         return false;
     }
 
     @Override
     public boolean modoDeJuegoEnParejas() {
-        return true;
+        return super.modoDeJuegoEnParejas();
     }
 }

@@ -5,11 +5,9 @@ import Domino.Juego.Jugador;
 import Domino.Juego.Parejas;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Reglas_Mexicano extends Reglas{
 
-    //!!!!!Me falta lo de la traca
     @Override
     public boolean rondaGanada(Jugador jugador){
         return jugador.getMano().isEmpty();
@@ -22,33 +20,12 @@ public class Reglas_Mexicano extends Reglas{
 
     @Override
     public boolean modoDeJuegoEnParejas(){
-        Scanner sc = new Scanner(System.in);
-        int respuesta;
-
-        while (true) {
-            System.out.println("Elige el modo de juego:");
-            System.out.println("Pulsa 1 si quieres el modo individual, pulsa 2 si quieres el modo en parejas");
-            try {
-                respuesta = sc.nextInt();
-                if (respuesta == 1) {
-                    return false;
-                }else if (respuesta == 2){
-                    return true;
-                }
-            } catch (Exception e) {
-                System.out.print("El valor introducido no es valido, introduce un nuevo valor");
-            }
-        }
+        return super.modoDeJuegoEnParejas();
     }
 
     @Override
-    public boolean tieneTraca() {
-        return true;
-    }
-
-    //Provisional
-    public int puntuacionTraca(){
-        return 1;
+    public boolean hayTranca() {
+        return false;
     }
 
     @Override
@@ -96,7 +73,7 @@ public class Reglas_Mexicano extends Reglas{
                         }
                     }
                 }
-                pareja.setPuntuacion(pareja.getPuntuacionEquipo() + puntuacionPareja);
+                pareja.setPuntuacion(puntuacionPareja);
 
                 if (jugadorGanador != null && jugadorGanador.getPuntuacion() >= puntuacionFinalPartida()) {
                     System.out.println("La pareja " + pareja.getNombre() + " ha ganado la partida");
@@ -120,7 +97,7 @@ public class Reglas_Mexicano extends Reglas{
                         puntuacion += ficha.getLadoA() + ficha.getLadoB();
                     }
                 }
-                jugador.setPuntuacion(jugador.getPuntuacion() + puntuacion);
+                jugador.setPuntuacion(puntuacion);
 
                 if (jugadorGanador != null && puntuacion >= puntuacionFinalPartida()) {
                     System.out.println("El jugador" + jugador.getNombre() + "ha ganado la partida");
