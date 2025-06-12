@@ -114,4 +114,13 @@ public class Reglas_Espanyol extends Reglas implements Serializable {
         }
         return 0;
     }
+
+    @Override
+    public void informacion(){
+        System.out.println("1.Objetivo: Llegar a 100 puntos");
+        System.out.println("2.Modalidades: Individual o en parejas");
+        System.out.println("3.Salida: Empieza el que tiene el 6 doble");
+        System.out.println("4.Finalizacion: Gana el jugador que tenga haya alcanzado los 100 puntos");
+        System.out.println("5.Suma: Al finalizar una ronda, cada jugador sumara a su puntuacion su mano");
+    }
 }

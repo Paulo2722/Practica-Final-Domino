@@ -165,6 +165,11 @@ public class Tablero implements Serializable {
 
     public void configurarModoDeJuego(Reglas reglas) {
         this.modoDeJuegoEsEnParejas = reglas.modoDeJuegoEnParejas();
+
+        if (!modoDeJuegoEsEnParejas && reglas.soloEnParejas()){
+            System.out.println("Esta modalidad solo puede ser en parejas, por ende, se cambiará su selección");
+            this.modoDeJuegoEsEnParejas = true;
+        }
     }
 
     public void elegirReglas() {

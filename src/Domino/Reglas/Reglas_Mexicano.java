@@ -108,4 +108,13 @@ public class Reglas_Mexicano extends Reglas implements Serializable {
         }
         return 0;
     }
+
+    @Override
+    public void informacion(){
+        System.out.println("1.Objetivo: Llegar a 200 puntos");
+        System.out.println("2.Modalidades: En parejas o individual");
+        System.out.println("3.Salida: Empieza el jugador que saque la ficha de mas valor");
+        System.out.println("4.Finalizacion: Gana la pareja que haya alcanzado los 200 puntos");
+        System.out.println("5.Suma: Al finalizar una ronda, la pareja ganadora sumara los puntos no jugados de los rivales");
+    }
 }

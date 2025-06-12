@@ -151,4 +151,13 @@ public class Reglas_Chileno extends Reglas implements Serializable {
     public boolean modoDeJuegoEnParejas(){
         return super.modoDeJuegoEnParejas();
     }
+
+    @Override
+    public void informacion(){
+        System.out.println("1.Objetivo: Evitar llegar a 121");
+        System.out.println("2.Modalidades: Individual o en parejas");
+        System.out.println("3.Salida: Empieza el que tiene el 6 doble");
+        System.out.println("4.Finalizacion: Gana el jugador que tenga menos puntos una vez un jugador haya alcanzado los 121");
+        System.out.println("5.Suma: Al finalizar una ronda, cada jugador sumara a su puntuacion su mano");
+    }
 }

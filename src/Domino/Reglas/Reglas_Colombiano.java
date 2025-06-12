@@ -78,4 +78,18 @@ public class Reglas_Colombiano extends Reglas implements Serializable {
     public boolean modoDeJuegoEnParejas() {
         return super.modoDeJuegoEnParejas();
     }
+
+    @Override
+    public boolean soloEnParejas(){
+        return true;
+    }
+
+    @Override
+    public void informacion(){
+        System.out.println("1.Objetivo: Llegar a 100 puntos");
+        System.out.println("2.Modalidades: Solo en parejas");
+        System.out.println("3.Salida: Empieza el que tiene el 6 doble");
+        System.out.println("4.Finalizacion: Gana el jugador que haya alcanzado los 100 puntos");
+        System.out.println("5.Suma: Al finalizar una ronda, la pareja ganadora sumará los puntos no jugados de los rivales");
+    }
 }

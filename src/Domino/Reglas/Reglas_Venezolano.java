@@ -78,4 +78,18 @@ public class Reglas_Venezolano extends Reglas implements Serializable {
     public boolean modoDeJuegoEnParejas() {
         return super.modoDeJuegoEnParejas();
     }
+
+    @Override
+    public boolean soloEnParejas(){
+        return true;
+    }
+
+    @Override
+    public void informacion(){
+        System.out.println("1.Objetivo: Llegar a 75 puntos");
+        System.out.println("2.Modalidades: Solo en parejas");
+        System.out.println("3.Salida: Empieza el que tiene el 6 doble");
+        System.out.println("4.Finalizacion: Gana la pareja que haya alcanzado los 75 puntos");
+        System.out.println("5.Suma: Al finalizar una ronda, la pareja ganadora sumara los puntos no jugados de los rivales");
+    }
 }

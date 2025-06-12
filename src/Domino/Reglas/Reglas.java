@@ -21,6 +21,10 @@ public abstract class Reglas implements Serializable {
         return modoEnParejas;
     }
 
+    public boolean soloEnParejas(){
+        return false;
+    }
+
     public abstract boolean rondaGanada(Jugador jugador);
 
     public abstract int puntuacionFinalPartida();
@@ -28,6 +32,10 @@ public abstract class Reglas implements Serializable {
     public abstract int puntuacionJugador(List<Jugador> jugadores, List<Parejas> parejas);
 
     public abstract int jugadorQueEmpiezaLaRonda(List<Jugador> jugador);
+
+    public void informacion(){
+        System.out.println("Informacion del reglamento:");
+    }
 
     public boolean hayTranca() {
         return haHabidoTranca;

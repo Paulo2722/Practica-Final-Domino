@@ -46,11 +46,26 @@ public class Reglas_Ponce extends Reglas implements Serializable {
         return super.modoDeJuegoEnParejas();
     }
 
-    public void sumarPuntuacionPorPase(Jugador jugador){
+    public void sumarPuntuacionPorPase(Jugador jugador) {
         Parejas pareja = jugador.getPareja();
 
-        if (pareja != null){
-            pareja.setPuntuacion(1);
+        if (pareja != null) {
+            int puntuacionActual = pareja.getPuntuacionEquipo();
+            pareja.setPuntuacion(puntuacionActual + 1);
         }
+    }
+
+    @Override
+    public boolean soloEnParejas(){
+        return true;
+    }
+
+    @Override
+    public void informacion(){
+        System.out.println("1.Objetivo: Llegar a 20 puntos");
+        System.out.println("2.Modalidades: Solo en parejas");
+        System.out.println("3.Salida: Empieza el que tiene el 6 doble");
+        System.out.println("4.Finalizacion: Gana la pareja que haya alcanzado los 20 puntos");
+        System.out.println("5.Suma: Cada vez que un jugador haga pasar a otro, se le sumara un punto");
     }
 }

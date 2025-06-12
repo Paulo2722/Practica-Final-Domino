@@ -24,6 +24,13 @@ public class Partida {
         }
 
         tablero.elegirReglas();
+        tablero.reglas.informacion();
+
+        if (!tablero.modoDeJuegoEnParejas() && tablero.reglas.soloEnParejas()) {
+            System.out.println("Este reglamento solo permite el modo en parejas");
+            return;
+        }
+
         boolean partidaEnParejas = tablero.modoDeJuegoEnParejas();
         tablero.reglas.setModoEnParejas(partidaEnParejas);
         tablero.configurarModoDeJuego(tablero.reglas);
