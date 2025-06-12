@@ -2,12 +2,13 @@ package Domino.Juego;
 
 import Domino.Reglas.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Tablero {
+public class Tablero implements Serializable {
     private final int filas = 1;
     private final int columnas = 30;
     private boolean modoDeJuegoEsEnParejas;
@@ -75,8 +76,12 @@ public class Tablero {
         return jugadores;
     }
 
+    public List<Parejas> getParejas() {
+        return parejas;
+    }
+
     public void repartirFichas(int numeroJugadores) {
-        int numeroMaximoFichasPorJugador = 7;
+        int numeroMaximoFichasPorJugador = 2;
         Random random = new Random();
 
         for (int i = 0; i < numeroMaximoFichasPorJugador; i++) {
@@ -120,6 +125,21 @@ public class Tablero {
                 }
             }
             System.out.println();
+        }
+    }
+
+    public void limpiarTablero() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                tablero[i][j] = null;
+            }
+        }
+        fichas = crearFichas();
+
+        primeraFichaColocada = false;
+
+        for (Jugador jugador : jugadores) {
+            jugador.getMano().clear();
         }
     }
 
@@ -204,12 +224,23 @@ public class Tablero {
 
         jugador.mostrarMano();
 
-        System.out.println(jugador.getNombre() + ", elige la ficha que quieres colocar: (0-" + (mano.size() - 1) + ")");
-        int posicionFicha = sc.nextInt();
+        int posicionFicha = -1;
+        while (true) {
+            try {
+                System.out.println(jugador.getNombre() + ", elige la ficha que quieres colocar: (0-" + (mano.size() - 1) + ")");
+                posicionFicha = sc.nextInt();
 
-        if (posicionFicha > mano.size() || posicionFicha < 0) {
-            System.out.println("El valor introducido no es valido, introduce otro");
+                if (posicionFicha < 0 || posicionFicha >= mano.size()) {
+                    System.out.println("El valor introducido no es válido, introduce otro.");
+                } else {
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Por favor, introduce un número válido.");
+                sc.nextLine(); // limpiar buffer
+            }
         }
+
         Ficha fichaSeleccionada = mano.get(posicionFicha);
         sc.nextLine();
 
@@ -230,13 +261,26 @@ public class Tablero {
             return;
         }
 
-        System.out.println("Elige la columna en la que poner la ficha: (0-29)");
+        int posicionColumna = -1;
+        while (true) {
+            try {
+                System.out.println("Elige la columna en la que poner la ficha: (0-29)");
+                System.out.print("Columna: ");
+                posicionColumna = sc.nextInt();
 
-        System.out.print("Columna: ");
-        int posicionColumna = sc.nextInt();
+                if (posicionColumna < 0 || posicionColumna >= columnas) {
+                    System.out.println("Columna inválida, introduce un valor entre 0 y 29.");
 
-        if (tablero[0][posicionColumna] != null) {
-            System.out.println("La posicion ya esta ocupada, elige otra");
+                } else if (tablero[0][posicionColumna] != null) {
+                    System.out.println("La posición ya está ocupada, elige otra.");
+
+                } else {
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Por favor, introduce un número válido.");
+                sc.nextLine();
+            }
         }
 
         boolean hayFichasAlrededor = false;
@@ -344,5 +388,13 @@ public class Tablero {
                 System.out.println("El jugador " + ganador.getNombre() + " gana la tranca y suma " + menorPuntuacion + " puntos");
             }
         }
+    }
+
+    public void setPrimeraFichaColocada(boolean valor) {
+        this.primeraFichaColocada = valor;
+    }
+
+    public boolean isPrimeraFichaColocada() {
+        return primeraFichaColocada;
     }
 }
