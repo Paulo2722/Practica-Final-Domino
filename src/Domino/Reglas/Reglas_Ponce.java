@@ -4,9 +4,10 @@ import Domino.Juego.Ficha;
 import Domino.Juego.Jugador;
 import Domino.Juego.Parejas;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Reglas_Ponce extends Reglas{
+public class Reglas_Ponce extends Reglas implements Serializable {
     @Override
     public boolean rondaGanada(Jugador jugador) {
         return false;

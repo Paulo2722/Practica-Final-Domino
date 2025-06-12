@@ -4,9 +4,10 @@ import Domino.Juego.Ficha;
 import Domino.Juego.Jugador;
 import Domino.Juego.Parejas;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class Reglas {
+public abstract class Reglas implements Serializable {
 
     protected boolean haHabidoTranca = false;
 

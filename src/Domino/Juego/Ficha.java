@@ -1,6 +1,8 @@
 package Domino.Juego;
 
-public class Ficha {
+import java.io.Serializable;
+
+public class Ficha implements Serializable {
     private int ladoA;
     private int ladoB;
 

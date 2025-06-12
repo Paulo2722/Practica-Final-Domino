@@ -4,9 +4,10 @@ import Domino.Juego.Ficha;
 import Domino.Juego.Jugador;
 import Domino.Juego.Parejas;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Reglas_Espanyol extends Reglas {
+public class Reglas_Espanyol extends Reglas implements Serializable {
 
     @Override
     public boolean rondaGanada(Jugador jugador) {
@@ -50,7 +51,6 @@ public class Reglas_Espanyol extends Reglas {
     @Override
     public int puntuacionJugador(List<Jugador> jugadores, List<Parejas> parejas) {
         if (modoDeJuegoEnParejas()) {
-
             for (int i = 0; i < parejas.size(); i++) {
                 Parejas pareja = parejas.get(i);
                 List<Jugador> jugadoresPareja = pareja.getJugadoresPareja();
@@ -65,7 +65,6 @@ public class Reglas_Espanyol extends Reglas {
                         jugadorGanador = jugador;
 
                     } else {
-
                         for (int n = 0; n < mano.size(); n++) {
                             Ficha ficha = mano.get(n);
                             puntuacionPareja += ficha.getLadoA() + ficha.getLadoB();
@@ -79,29 +78,38 @@ public class Reglas_Espanyol extends Reglas {
                 }
             }
         } else {
+            Jugador jugadorGanador = null;
+            int puntosTotalesRonda = 0;
 
             for (int i = 0; i < jugadores.size(); i++) {
-                List<Ficha> mano = jugadores.get(i).getMano();
-                Jugador jugador = jugadores.get(i);
-                Jugador jugadorGanador = null;
-                int puntuacion = 0;
-
-                if (mano.isEmpty()) {
+                if (jugadores.get(i).getMano().isEmpty()) {
                     jugadorGanador = jugadores.get(i);
+                    break;
+                }
+            }
+            if (jugadorGanador != null) {
+                for (int i = 0; i < jugadores.size(); i++) {
+                    Jugador jugador = jugadores.get(i);
 
-                } else {
+                    if (jugador != jugadorGanador) {
+                        List<Ficha> mano = jugador.getMano();
 
-                    for (int j = 0; j < mano.size(); j++) {
-                        Ficha ficha = mano.get(j);
-                        puntuacion += ficha.getLadoA() + ficha.getLadoB();
+                        for (int j = 0; j < mano.size(); j++) {
+                            Ficha ficha = mano.get(j);
+                            puntosTotalesRonda += ficha.getLadoA() + ficha.getLadoB();
+                        }
                     }
                 }
-                jugador.setPuntuacion(puntuacion);
+                jugadorGanador.setPuntuacion(jugadorGanador.getPuntuacion() + puntosTotalesRonda);
 
-                if (jugadorGanador != null && puntuacion >= puntuacionFinalPartida()) {
-                    System.out.println("El jugador" + jugador.getNombre() + "ha ganado la partida");
+                if (jugadorGanador.getPuntuacion() >= puntuacionFinalPartida()) {
+                    System.out.println("El jugador " + jugadorGanador.getNombre() + " ha ganado la partida");
                 }
-                return puntuacion;
+            }
+            if (jugadorGanador != null) {
+                return jugadorGanador.getPuntuacion();
+            } else {
+                return 0;
             }
         }
         return 0;

@@ -1,9 +1,10 @@
 package Domino.Juego;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parejas {
+public class Parejas implements Serializable {
     private List<Jugador> jugadoresPareja;
     private Parejas pareja;
     private String nombre;
