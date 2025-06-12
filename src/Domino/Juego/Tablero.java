@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Tablero {
     private final int filas = 1;
     private final int columnas = 30;
-    private boolean modoDeJuegoEsEnParejas = false;
+    private boolean modoDeJuegoEsEnParejas;
     private boolean primeraFichaColocada = false;
     Reglas reglas;
     private Ficha[][] tablero;
@@ -120,6 +120,26 @@ public class Tablero {
                 }
             }
             System.out.println();
+        }
+    }
+
+    public boolean modoDeJuegoEnParejas() {
+        Scanner sc = new Scanner(System.in);
+        String respuesta;
+
+        while (true) {
+            System.out.println("Elige el modo de juego:");
+            System.out.println("Pulsa 'I' si quieres el modo individual, pulsa 'P' si quieres el modo en parejas");
+
+            respuesta = sc.nextLine().toLowerCase();
+
+            if (respuesta.equals("i")){
+                return false;
+            }else if (respuesta.equals("p")){
+                return true;
+            }else{
+                System.out.println("El valor introducido no es valido");
+            }
         }
     }
 
